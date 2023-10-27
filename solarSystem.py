@@ -41,6 +41,12 @@ class StarSystem:
         for p in sortedList:
             print(p.getName(), "-", p.getDistance())
 
+    def yeetMoons(self, x, y):
+        for m in self.__moons:
+            m.setVelY(20)
+        
+        print("YEET!")
+
 
 class StellarObject:
     def __init__(self, name, radius, mass, color):
@@ -67,11 +73,8 @@ class StellarObject:
     
     def getName(self):
         return self.__name
-
     
-
-
-
+    
 class Star(StellarObject):
 
     def __init__(self, name, radius, mass, color, x, y):
@@ -104,6 +107,12 @@ class MovingObject(StellarObject):
     def getDistance(self):
         return self.__distance
     
+    def getVelY(self):
+        return self.__velY
+    
+    def setVelY(self, newVelY):
+        self.__velY = newVelY
+    
     def move(self):
         #update positon       
         self.x = self.x + dt * self.__velX
@@ -122,13 +131,7 @@ class MovingObject(StellarObject):
         self.__velY = self.__velY + dt * accY
 
 
-
-
-
-
-
-
-SolarSystem = StarSystem()
+solarSystem = StarSystem()
 
 sun = Star("Sun", 4, 5000, "yellow", 0, 0)
 earth = MovingObject("Earth", 1, 5000, "blue", sun, 70, 0, 2)
@@ -138,18 +141,30 @@ venus = MovingObject("Venus", 0.3, 400, "red", sun, 50, 0, 2)
 europa = MovingObject("Europa", 0.3, 100, "white", jupiter, 40, 0, 5)
 mercury = MovingObject("Mercury", 0.2, 600, "turquoise", sun, 30, 0, 2.3)
 
-SolarSystem.addStar(sun)
-SolarSystem.addPlanet(earth)
-SolarSystem.addMoon(moon)
-SolarSystem.addPlanet(jupiter)
-SolarSystem.addPlanet(mercury)
-SolarSystem.addMoon(europa)
-SolarSystem.addPlanet(venus)
+solarSystem.addStar(sun)
+solarSystem.addPlanet(earth)
+solarSystem.addMoon(moon)
+solarSystem.addPlanet(jupiter)
+solarSystem.addPlanet(mercury)
+solarSystem.addMoon(europa)
+solarSystem.addPlanet(venus)
+
+
+button = turtle.Turtle()
+button.hideturtle()
+button.shape('circle')
+button.penup()
+button.goto(-300, 150)
+button.color("white")
+button.write("Click btn to yeet moons", align='center', font=('Arial', 12, 'bold'))
+button.sety(200)
+button.onclick(solarSystem.yeetMoons)
+button.showturtle()
 
 
 
-SolarSystem.printInfo()
-SolarSystem.runSimulation()
+solarSystem.printInfo()
+solarSystem.runSimulation()
 
     
 
